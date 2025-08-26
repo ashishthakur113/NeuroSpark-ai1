@@ -50,6 +50,13 @@ export default function Main() {
 
     recognition.start();
   };
+   
+const getPlainText = (markdown) => {
+  const html = marked.parse(markdown); // convert to HTML
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html; 
+  return tempDiv.innerText; // plain text only
+};
 
 
 
@@ -119,7 +126,8 @@ export default function Main() {
                   <button
                     className={`copy-btn ${copied ? "copied" : ""}`}
                     onClick={() => {
-                      navigator.clipboard.writeText(resultData)
+                    navigator.clipboard.writeText(getPlainText(resultData))
+
                         .then(() => {
                           setCopied(true);
                           setTimeout(() => setCopied(false), 1500);
